@@ -1,4 +1,8 @@
 class PhotosController < ApplicationController
-    has_many :likes
-    has_many :comments
+
+
+    def index
+        @photos = Photo.all
+    end
+
 end
