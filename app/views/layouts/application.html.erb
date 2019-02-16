@@ -26,7 +26,16 @@
                     </li>
                 <% else %>
                     <li class="nav-item">
-                        <%=  link_to "Sign Out", sign_out_path, method: :post %>
+                        <%=  link_to "My Album", my_photos_path, class:"mr-5" %>
+                    </li>
+                    <li class="nav-item">
+                        <%=  link_to "My Friends", root_path, class:"mr-5" %>
+                    </li>
+                    <li class="nav-item">
+                        <%=  link_to "My Profile", user_path(current_user), class:"mr-5" %>
+                    </li>
+                    <li class="nav-item">
+                        <%=  link_to "Sign Out", sign_out_path, method: :post, class:"mr-5" %>
                     </li>
                     Signed in as <%= current_user.email %>
                 <% end %>
