@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
+    before_action :authorize_user, only: [:show, :edit, :update]
+    before_action :authorize_admin, only: [:index, :destroy]
 
     def index
         @users = User.all
@@ -52,6 +54,20 @@ class UsersController < ApplicationController
     private
     def set_user
         @user = User.find(params[:id])
+    end
+
+    def authorize_user
+        if current_user.id != params[:id].to_i || !is_admin?
+            flash["error"] = "You do not have sufficient permission to do this action."
+            redirect_to root_path
+        end
+    end
+
+    def authorize_admin
+        if !is_admin?
+            flash["error"] = "You do not have sufficient permission to do this action."
+            redirect_to root_path
+        end
     end
 
     def user_params

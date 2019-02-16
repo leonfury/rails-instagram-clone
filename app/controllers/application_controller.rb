@@ -16,5 +16,9 @@ class ApplicationController < ActionController::Base
         session[:user_id] ? true : false
     end
 
+    def is_admin?
+        current_user.role ? true : false
+    end
+
 end
 

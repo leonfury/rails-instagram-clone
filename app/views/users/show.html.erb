@@ -1,1 +1,36 @@
 <h1> My Profile </h1>
+<div class="row">
+    <div class="">
+        <%= image_tag @user.avatar.to_s, size:"300x300", class:"border rounded", style:"background-size: cover;" %>
+    </div>
+    <table class="ml-5">
+        <tr>
+            <td class="pr-5">Name</td>
+            <td>: <%= current_user.username %></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>: <%= current_user.email %></td>
+        </tr>
+        <tr>
+            <td>About Me</td>
+            <td>: <%= current_user.description %></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>: <%= current_user.address %></td>
+        </tr>
+        <tr>
+            <td>Longtitude</td>
+            <td>: <%= current_user.long %></td>
+        </tr>
+        <tr>
+            <td>Latitude</td>
+            <td>: <%= current_user.lat %></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><%= link_to "Edit Profile", edit_user_path(current_user) %></td>
+        </tr>
+    </table>
+</div>
