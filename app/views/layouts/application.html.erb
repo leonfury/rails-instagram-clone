@@ -37,6 +37,7 @@
                     <li class="nav-item">
                         <%=  link_to "Sign Out", sign_out_path, method: :post, class:"mr-5" %>
                     </li>
+                    <%= image_tag current_user.avatar.to_s, size:"30x30", class:"mr-3", style:"background-size: cover; border-radius: 50%;" %>
                     Signed in as <%= current_user.email %>
                 <% end %>
             </ul>
