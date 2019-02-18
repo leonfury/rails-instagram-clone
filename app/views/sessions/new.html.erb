@@ -1,16 +1,21 @@
-<%= form_with url: sign_in_path, scope: "user", local: :true do |f| %>
-    <div class="field">
-        <%= f.label :email %>
-        <%= f.text_field :email %>
-    </div>
+<div class="w-50 m-auto">
+    <%= form_with url: sign_in_path, scope: "user", local: :true do |f| %>
+        <table>
+            <tr>
+                <td><%= f.label :email %></td>
+                <td><%= f.text_field :email %></td>
+            </tr>
 
-    <div class="field">
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-    </div>
+            <tr>
+                <td class="pr-3"><%= f.label :password %></td>
+                <td><%= f.password_field :password %></td>
+            </tr>
 
-    
-        <%= f.submit %>
-    
-
-<% end %>
+            <tr>
+                <td colspan="2" class="text-right">
+                    <%= f.submit "Sign In", class:"btn btn-primary" %>
+                </td>
+            </tr>
+        </table>
+    <% end %>
+</div>

@@ -1,11 +1,13 @@
 
 <% if @photos.count > 0 %>
     <% @photos.each do |p| %>
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-lg-3 text-justify">
             <div id="<%= p.id %>" class="gal_item" style="">
-                <p class="gal_item_location"><%= p.location if p.location %></p>
+                <% if p.location %>
+                    <p class="gal_item_location">Location: <%= p.location.capitalize %></p>
+                <% end %>
                 <p> 
-                    <% if p.tags.count > 0 %>
+                    <% if p.tags %>
                         <i>Tags: </i>
                         <% p.tags.each do |t| %> 
                             <button class="btn btn-light">

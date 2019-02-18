@@ -1,32 +1,77 @@
 <h1> Upload New Photo </h1>
-<%= form_with url: photos_path, scope: "photo", local: true, method: :post do |form| %>
-<table>
-    <tr>
-        <td><%= form.label :caption %></td>
-        <td><%= form.text_field :caption %></td>
-    </tr>        
-    <tr>
-        <td><%= form.label :location %></td>
-        <td><%= form.text_field :location %></td>
-    </tr>
-    <tr>
-        <td><%= form.label :long %></td>
-        <td><%= form.text_field :long %></td>
-    </tr>
-    <tr>
-        <td><%= form.label :lat %></td>
-        <td><%= form.text_field :lat %></td>
-    </tr>
-    <tr>
-        <td><%= form.label :tags %></td>
-        <td><%= form.text_field :tags %></td>
-    </tr>
-    <tr>
-        <td colspan="2"><%= form.file_field :url %></td>
-    </tr>
-    <tr><td><br></td></tr>
-    <tr>
-        <td colspan="2"><%= form.submit %></td>
-    </tr>
-</table>
-<% end %>
+<div class="row w-100">
+    <div class="col-6">
+        <div id="map" style="min-width: 100%; width: 100%; min-height: 100vh; height: 100vh;"></div>
+    </div>
+    <div class="col-6">
+        <%= form_with url: photos_path, scope: "photo", local: true, method: :post do |form| %>
+            <table class="w-100">
+                <tr>
+                    <td width="20%"><%= form.label :photo_caption %></td>
+                    <td><%= form.text_area :caption, cols: 20, rows: 8, class:"w-100" %></td>
+                </tr>    
+
+                <tr>
+                    <td><%= form.label :location %></td>
+                    <td><%= form.text_area :location, cols: 20, rows: 8, class:"w-100" %></td>
+                </tr>
+
+                <tr>
+                    <td><%= form.label :long %></td>
+                    <td><%= form.text_field :long %></td>
+                </tr>
+
+                <tr>
+                    <td><%= form.label :lat %></td>
+                    <td><%= form.text_field :lat %></td>
+                </tr>
+
+                <tr>
+                    <td><%= form.label :tags %></td>
+                    <td><%= form.text_area :tags, cols: 20, rows: 3, class:"w-100" %></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><%= form.file_field :url %></td>
+                </tr>
+                <tr><td><br></td></tr>
+                <tr>
+                    <td colspan="2"><%= form.submit %></td>
+                </tr>
+            </table>
+        <% end %>
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';    
+    var marker = 0;
+    var client = new MapboxClient(mapboxgl.accessToken);
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10',
+    });
+
+    $('#photo_location').on('keyup', () => {
+        getCoordinates();
+    })
+
+    function getCoordinates(){
+        if (marker) { marker.remove() }
+        var getAddress = document.getElementById('photo_location').value;
+        client.geocodeForward(getAddress, function(err, data, res){
+            var coordinates = data.features[0].center;
+            $('#photo_long')[0].value = coordinates[0];
+            $('#photo_lat')[0].value = coordinates[1];
+            
+            map.flyTo({
+                center: coordinates,
+                zoom: 18,
+            });
+
+            var marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+        });
+    }
+})
+</script>

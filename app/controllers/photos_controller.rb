@@ -16,12 +16,22 @@ class PhotosController < ApplicationController
     def create
         @photo = Photo.new(photo_params)
         @photo.user_id = current_user.id
+        p_tags = []
+
+        if params[:photo][:tags]
+            array = params[:photo][:tags].split(',')
+            array.each do |i|
+                p_tags << i
+            end
+            @photo.tags = p_tags
+        end
+
         if @photo.save
-            flash[:success] = "Photo uploaded to gallery succesfully"
+            flash[:success] = "Photo uploaded to gallery succesfully"        
         else
             flash[:error] = "Photo upload failed"
         end
-        redirect_to my_photos_path
+        redirect_to root_path
     end
 
     private
@@ -32,7 +42,6 @@ class PhotosController < ApplicationController
             :location,
             :long,
             :lat,
-            :tags,
         )
     end
 
