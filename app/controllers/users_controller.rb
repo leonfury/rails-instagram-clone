@@ -54,7 +54,7 @@ class UsersController < SessionsController
     end
 
     def authorize_user
-        if current_user.id != params[:id].to_i || !is_admin?
+        if current_user.id != params[:id].to_i || is_admin?
             flash["error"] = "You do not have sufficient permission to do this action."
             redirect_to root_path
         end
