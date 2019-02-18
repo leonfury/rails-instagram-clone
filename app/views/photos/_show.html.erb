@@ -24,18 +24,11 @@
                 <p class="gal_item_date"><%= @photo.created_at.strftime("%d %B %Y") %></p>
             </div>
         </div>
-        <% if signed_in? %>
-            <% if Like.find_by(photo_id: @photo.id, user_id: current_user.id) == nil %> 
-                <button id="like_<%= @photo.id %>" class="like_btn btn mr-2 btn-light"> Like </button>
-            <% else %>
-                <button id="like_<%= @photo.id %>" class="like_btn btn mr-2 btn-danger" disabled> Like </button>
-            <% end %>       
-        <% end %>
-        <br><br>
+        
 
-        <%= form_with url: root_path, method: :post, remote: true, class:"text-right" do |f| %>
+        <%= form_with url: comment_path(@photo.id), method: :post, remote: true, class:"text-right" do |f| %>
             <%= f.text_area :comment, cols: 20, rows: 4, class:"w-100 form-control" %>
-            <%= f.submit "Add Comment", class:"btn btn-success mt-1" %>
+            <%= f.submit "Add Comment", id:"add_com_btn", class:"btn btn-success mt-1" %>
         <% end %>        
         
         <hr class="mt-1">
@@ -45,7 +38,31 @@
                     <%= image_tag @photo.user.avatar.to_s, class:"profile_photo_badge mr-2" %>
                     <span class="gal_item_author"><%= @photo.user.username %></span>
                 </a>
-                <span class="gal_item_caption"><%= @photo.caption %></span></p>
+                <span class="gal_item_caption"><%= @photo.caption %></span>
+            </p>
         </div>
+
+        <!-- comment loop -->
+        <% if @photo.comments.count > 0 %>
+            <% @photo.comments.each do |c| %>
+                <p class="ml-4">
+                    <a href="/user/<%= c.user.id %>/photos">
+                        <%= image_tag c.user.avatar.to_s, class:"profile_photo_badge mr-2" %>
+                        <span class="gal_item_author"><%= c.user.username %></span>
+                    </a>
+                    <span class="gal_item_caption"><%= c.comment %></span>
+                </p>
+
+            <% end %>
+        <% end %>
     </div>
 </div>
+
+<script>
+    $('#add_com_btn').on('click', () => {
+        var a = $('#comment')[0].value;
+        
+    })
+
+    $('#comment')[0].value = "";
+</script>

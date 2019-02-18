@@ -19,8 +19,8 @@
 
                 <div class="row align-items-center mt-2"> 
                     <div class="col-6">
-                        <span id="total_like_<%= p.id %>"><%= Like.where(photo_id: p.id).count %></span> Likes | 
-                        <span> 0</span> Comments 
+                        <span id="total_like_<%= p.id %>"><%= p.likes.count %></span> Likes | 
+                        <span id="total_com_<%= p.id %>"><%= p.comments.count %></span> Comments 
                     </div>
                     <div class="col-6" style="float: right;">
                         <p class="gal_item_date"><%= p.created_at.strftime("%d %B %Y") %></p>

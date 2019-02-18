@@ -1,0 +1,3 @@
+$("#gal_modal").html("<%= escape_javascript(render partial: 'photos/show') %>"); 
+
+$("#total_com_<%= @photo.id %>")[0].textContent =  parseInt($("#total_com_<%= @photo.id %>")[0].textContent ) + 1;
