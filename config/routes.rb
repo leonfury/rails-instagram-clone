@@ -13,4 +13,5 @@ Rails.application.routes.draw do
     get "/sign_in" => "sessions#new", as: "sign_in_page"
     post "/sign_in" => "sessions#sign_in", as: "sign_in"
     post "/sign_out" => "sessions#sign_out", as: "sign_out"
+    post "/:id/like" => "likes#create", as: "like"
 end

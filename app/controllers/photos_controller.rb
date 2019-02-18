@@ -44,5 +44,4 @@ class PhotosController < ApplicationController
             :lat,
         )
     end
-
 end
