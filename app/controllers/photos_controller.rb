@@ -5,7 +5,12 @@ class PhotosController < ApplicationController
     end
 
     def index_user
-        @photos = Photo.where(user_id: current_user.id)
+        @photos = Photo.where(user_id: params[:id])
+        @user = User.find(params[:id])
+    end
+
+    def new
+        @photo = Photo.new
     end
 
     def create

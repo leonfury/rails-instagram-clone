@@ -1,0 +1,42 @@
+
+<% if @photos.count > 0 %>
+    <% @photos.each do |p| %>
+        <div class="col-sm-6 col-lg-3">
+            <div id="<%= p.id %>" class="gal_item" style="">
+                <p class="gal_item_location"><%= p.location if p.location %></p>
+                <p> 
+                    <% if p.tags.count > 0 %>
+                        <i>Tags: </i>
+                        <% p.tags.each do |t| %> 
+                            <button class="btn btn-light">
+                                <%= t %>
+                            </button>
+                        <% end %>
+                    <% end %>
+                </p>
+                <%= image_tag p.url.to_s, size:"" %>
+
+                <div class="row align-items-center mt-2"> 
+                    <div class="col-6" style="">
+                        <span>0</span> Likes | 
+                        <span> 0</span> Comments 
+                    </div>
+                    <div class="col-6" style="float: right;">
+                        <p class="gal_item_date"><%= p.created_at.strftime("%d %B %Y") %></p>
+                    </div>
+                </div>
+                <button class="btn btn-light mr-2"> Like </button>
+                <button class="btn btn-light mr-2"> Comment </button>
+                <hr class="mt-1">
+                <div style="clear: both;">
+                    <p>
+                        <a href="/user/<%= p.user.id %>/photos">
+                            <%= image_tag p.user.avatar.to_s, class:"profile_photo_badge mr-2" %>
+                            <span class="gal_item_author"><%= p.user.username %></span>
+                        </a>
+                        <span class="gal_item_caption"><%= p.caption %></span></p>
+                </div>
+            </div>
+        </div>
+    <% end %>
+<% end %>

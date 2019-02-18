@@ -1,0 +1,32 @@
+<h1> Upload New Photo </h1>
+<%= form_with url: photos_path, scope: "photo", local: true, method: :post do |form| %>
+<table>
+    <tr>
+        <td><%= form.label :caption %></td>
+        <td><%= form.text_field :caption %></td>
+    </tr>        
+    <tr>
+        <td><%= form.label :location %></td>
+        <td><%= form.text_field :location %></td>
+    </tr>
+    <tr>
+        <td><%= form.label :long %></td>
+        <td><%= form.text_field :long %></td>
+    </tr>
+    <tr>
+        <td><%= form.label :lat %></td>
+        <td><%= form.text_field :lat %></td>
+    </tr>
+    <tr>
+        <td><%= form.label :tags %></td>
+        <td><%= form.text_field :tags %></td>
+    </tr>
+    <tr>
+        <td colspan="2"><%= form.file_field :url %></td>
+    </tr>
+    <tr><td><br></td></tr>
+    <tr>
+        <td colspan="2"><%= form.submit %></td>
+    </tr>
+</table>
+<% end %>

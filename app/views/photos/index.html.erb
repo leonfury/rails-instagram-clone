@@ -1,12 +1,11 @@
-<h1> Landing Page Here </h1>
+<h1> Rails Instagram Clone </h1>
 
-<div class="row">
-    <% if @photos.count > 0 %>
-        <% @photos.each do |p| %>
-            <div>
-                By 
-                <%= image_tag p.url.to_s, size:"" %>
-            </div>
-        <% end %>
-    <% end %>
+<div class="row w-100 ml-2 mr-2">
+    <div class="col-sm-6 col-lg-3">
+        <div class="gal_item" style="">
+            <h4>Search Filter</h4>
+
+        </div>
+    </div>
+    <%= render partial: "photos/gallery" %>
 </div>
