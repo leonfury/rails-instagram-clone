@@ -10,50 +10,58 @@
             </ul>
         </div>
     <% end %>
+    <table class="w-100">
+        <tr>
+            <td width="20%"><%= form.label :email %></td>
+            <td width="80%"><%= form.text_field :email, class:"w-100" %></td>
+        </tr>
 
-    <div class="field">
-        <%= form.label :email %>
-        <%= form.text_field :email %>
-    </div>
+        <tr>
+            <td><%= form.label :password %></td>
+            <td><%= form.password_field :password, class:"w-100" %></td>
+        </tr>
 
-    <div class="field">
-        <%= form.label :password %>
-        <%= form.password_field :password %>
-    </div>
+        <tr>
+            <td><%= form.label :password_confirmation, class:"mr-2" %></td>
+            <td><%= form.password_field :password_confirmation, class:"w-100" %></td>
+        </tr>
+        <tr><td><br></td></tr>
+        <tr>
+            <td><%= form.label :username %></td>
+            <td><%= form.text_field :username, class:"w-100" %></td>
+        </tr>
 
-    <div class="field">
-        <%= form.label :password_confirmation %>
-        <%= form.password_field :password_confirmation %>
-    </div>
+        <tr>
+            <td><%= form.label :description %></td>
+            <td><%= form.text_area :description, cols: 20, rows: 8, class:"w-100" %></td>
+        </tr>
+        <tr><td><br></td></tr>
+        <tr>
+            <td><%= form.label :address %></td>
+            <td><%= form.text_area :address, cols: 20, rows: 8, class:"w-100" %></td>
+        </tr>
 
-    <div class="field">
-        <%= form.label :username %>
-        <%= form.text_field :username %>
-    </div>
+        <tr>
+            <td><%= form.label :long %></td>
+            <td><%= form.text_field :long %></td>
+        </tr>
 
-    <div class="field">
-        <%= form.label :description %>
-        <%= form.text_field :description %>
-    </div>
+        <tr>
+            <td><%= form.label :lat %></td>
+            <td><%= form.text_field :lat %></td>
+        </tr>
+        <tr><td><br></td></tr>
+        <tr>
+            <td colspan="2">
+                <%= form.file_field :avatar %>
+            </td>
+        </tr>
+        <tr><td><br></td></tr>
+        <tr>
+            <td colspan="2">
+                <%= form.submit %>
+            </td>
+        </tr>
 
-    <div class="field">
-        <%= form.label :address %>
-        <%= form.text_field :address %>
-    </div>
-
-    <div class="field">
-        <%= form.label :long %>
-        <%= form.text_field :long %>
-    </div>
-
-    <div class="field">
-        <%= form.label :lat %>
-        <%= form.text_field :lat %>
-    </div>
-
-    <%= form.file_field :avatar %>
-
-    <div class="actions">
-        <%= form.submit %>
-    </div>
+    </table>
 <% end %>

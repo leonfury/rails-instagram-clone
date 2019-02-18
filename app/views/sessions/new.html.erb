@@ -1,4 +1,4 @@
-<%= form_with url: sign_in_path, local: :true do |f| %>
+<%= form_with url: sign_in_path, scope: "user", local: :true do |f| %>
     <div class="field">
         <%= f.label :email %>
         <%= f.text_field :email %>
