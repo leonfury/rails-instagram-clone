@@ -2,10 +2,12 @@ class PhotosController < ApplicationController
 
     def index
         @photos = Photo.all
+        @photo = Photo.last
     end
 
     def index_user
         @photos = Photo.where(user_id: params[:id])
+        @photo = Photo.last
         @user = User.find(params[:id])
     end
 
@@ -32,6 +34,14 @@ class PhotosController < ApplicationController
             flash[:error] = "Photo upload failed"
         end
         redirect_to root_path
+    end
+
+    def show
+        @photo = Photo.find(params[:id])
+        
+        respond_to do |format|
+            format.js
+        end
     end
 
     private

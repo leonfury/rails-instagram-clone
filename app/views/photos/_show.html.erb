@@ -1,0 +1,51 @@
+<div class="text-justify">
+    <div id="<%= @photo.id %>" class="" style="">
+        <% if @photo.location %>
+            <p class="gal_item_location">Location: <%= @photo.location.capitalize %></p>
+        <% end %>
+        <p> 
+            <% if @photo.tags %>
+                <i>Tags: </i>
+                <% @photo.tags.each do |t| %> 
+                    <button class="btn btn-light">
+                        <%= t %>
+                    </button>
+                <% end %>
+            <% end %>
+        </p>
+        <%= image_tag @photo.url.to_s, style:"width: 100%" %>
+
+        <div class="row align-items-center mt-2"> 
+            <div class="col-6">
+                <span id="total_like_<%= @photo.id %>"><%= Like.where(photo_id: @photo.id).count %></span> Likes | 
+                <span> 0</span> Comments 
+            </div>
+            <div class="col-6" style="float: right;">
+                <p class="gal_item_date"><%= @photo.created_at.strftime("%d %B %Y") %></p>
+            </div>
+        </div>
+        <% if signed_in? %>
+            <% if Like.find_by(photo_id: @photo.id, user_id: current_user.id) == nil %> 
+                <button id="like_<%= @photo.id %>" class="like_btn btn mr-2 btn-light"> Like </button>
+            <% else %>
+                <button id="like_<%= @photo.id %>" class="like_btn btn mr-2 btn-danger" disabled> Like </button>
+            <% end %>       
+        <% end %>
+        <br><br>
+
+        <%= form_with url: root_path, method: :post, remote: true, class:"text-right" do |f| %>
+            <%= f.text_area :comment, cols: 20, rows: 4, class:"w-100 form-control" %>
+            <%= f.submit "Add Comment", class:"btn btn-success mt-1" %>
+        <% end %>        
+        
+        <hr class="mt-1">
+        <div style="clear: both;">
+            <p>
+                <a href="/user/<%= @photo.user.id %>/photos">
+                    <%= image_tag @photo.user.avatar.to_s, class:"profile_photo_badge mr-2" %>
+                    <span class="gal_item_author"><%= @photo.user.username %></span>
+                </a>
+                <span class="gal_item_caption"><%= @photo.caption %></span></p>
+        </div>
+    </div>
+</div>
