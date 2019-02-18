@@ -1,1 +1,12 @@
 <h1> Landing Page Here </h1>
+
+<div class="row">
+    <% if @photos.count > 0 %>
+        <% @photos.each do |p| %>
+            <div>
+                By 
+                <%= image_tag p.url.to_s, size:"" %>
+            </div>
+        <% end %>
+    <% end %>
+</div>

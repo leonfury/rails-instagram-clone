@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
     get "/my_photos" => "photos#index_user", as: "my_photos"
 
-    resources :photos, only: [:index]
+    resources :photos, only: [:index, :create]
     root "photos#index"
 
     get "/sign_in" => "sessions#new", as: "sign_in_page"

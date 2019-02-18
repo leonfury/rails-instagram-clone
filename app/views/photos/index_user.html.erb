@@ -1,1 +1,39 @@
 <h1> My Photos </h1>
+
+<%= form_with url: photos_path, scope: "photo", local: true, method: :post do |form| %>
+
+    <div class="field">
+        <%= form.label :caption %>
+        <%= form.text_field :caption %>
+    </div>
+
+    <div class="field">
+        <%= form.label :location %>
+        <%= form.text_field :location %>
+    </div>
+
+    <div class="field">
+        <%= form.label :long %>
+        <%= form.text_field :long %>
+    </div>
+
+    <div class="field">
+        <%= form.label :lat %>
+        <%= form.text_field :lat %>
+    </div>
+
+    <div class="field">
+        <%= form.label :tags %>
+        <%= form.text_field :tags %>
+    </div>
+
+    <%= form.file_field :url %>
+    <%= form.submit %>
+<% end %>
+<hr>
+
+<% if @photos.count > 0 %>
+    <% @photos.each do |p| %>
+        <%= image_tag p.url.to_s, size:"200x200" %>
+    <% end %>
+<% end %>
