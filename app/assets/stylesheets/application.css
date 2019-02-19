@@ -17,6 +17,8 @@
 .profile_photo_badge {
     max-width: 30px;
     max-height: 30px;
+    width: 30px;
+    height: 30px;
     background-size: cover;
     border-radius: 50%;
 }
@@ -44,8 +46,7 @@
 }
 
 .gal_item_location {
-    padding-top: 15px;
-    line-height: 0%;
+    margin-bottom: 0px;
 }
 
 .gal_item_caption {
@@ -53,9 +54,8 @@
 }
 
 .gal_item_date {
-    padding-top: 15px;
+    padding-top: 10px;
     text-align: right;
-    line-height: 0%;
 }
 
 #overlay_container {
