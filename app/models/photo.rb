@@ -24,7 +24,18 @@ class Photo < ApplicationRecord
         return result, "tags: #{tag}"
     end
 
-    def self.create_new(*input)
-        byebug
+    def self.create_new(input)
+        photo = Photo.new(input)
+        p_tags = []
+
+        if input[:tags]
+            tags = input[:tags].split(',')
+            tags.each do |i|
+                p_tags << i.strip
+            end
+            photo.tags = p_tags
+        end
+        return photo.save ? true : false
     end
+
 end
