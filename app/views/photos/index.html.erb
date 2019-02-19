@@ -16,9 +16,9 @@
     </div>
 </div>
 
-<div class="row w-100 ml-2 mr-2">
-    <div class="col-sm-6 col-lg-3">
-        <div class="gal_item" style="">
+<div class="row grid js-masonry w-100 ml-2 mr-2">
+    <div class="grid-item col-sm-6 col-lg-3" >
+        <div class="gal_item" style="background-color: #f8f9fa;">
             <h4>Search Filter</h4>
             <span>Searches for photo caption, photo location & username</span>
             <%= form_with url: photos_path, method: "get", local: true do %>
@@ -29,9 +29,7 @@
             <% end %>
             <br>
             <br>
-
             <%= "Displaying search results for: #{@search}" if @search %>
-
         </div>
     </div>
     <%= render partial: "photos/gallery" %>

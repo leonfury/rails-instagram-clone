@@ -9,10 +9,12 @@ class PhotosController < ApplicationController
 
         @photos = @photos.where("? = ANY (tags)", params[:tags]) if params[:tags].present?
         @search = "tags: #{params[:tags]}" if params[:tags].present?
+
+        @photos = @photos.order("created_at DESC")
     end
 
     def index_user
-        @photos = Photo.where(user_id: params[:id])
+        @photos = Photo.where(user_id: params[:id]).order("created_at DESC")
         @photo = Photo.last
         @user = User.find(params[:id])
     end

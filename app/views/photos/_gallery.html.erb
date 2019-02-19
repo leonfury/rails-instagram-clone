@@ -1,6 +1,6 @@
 <% if @photos.count > 0 %>
     <% @photos.each do |p| %>
-        <div class="col-sm-6 col-lg-3 text-justify">
+        <div class="grid-item col-sm-6 col-lg-3 text-justify">
             <div id="<%= p.id %>" class="gal_item" style="">
                 <% if p.location %>
                     <p class="gal_item_location">Location: <%= p.location.capitalize %></p>
@@ -55,25 +55,31 @@
 <% end %>
 
 <script>
-    $('.like_btn').on('click', (e) => {
-        var photo_id = e.target.id;        
-        
-        var like = {};
-        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-        like["authenticity_token"] = AUTH_TOKEN;
-        
-        $.ajax({
-            url: `/${photo_id.split('_')[1]}/like`,
-            method: "POST",
-            data: like,
-            dataType: "JSON",
-            success: function(){
-                $(`#${photo_id}`).removeClass('btn-light').addClass('btn-danger').prop('disabled', 'disabled');
-                $(`#total_${photo_id}`)[0].textContent = parseInt($(`#total_${photo_id}`)[0].textContent) + 1;
-            },
-            error: function(error){
-                console.log(error);
-            }
-        });
-    })
+$('.like_btn').on('click', (e) => {
+    var photo_id = e.target.id;        
+    
+    var like = {};
+    var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+    like["authenticity_token"] = AUTH_TOKEN;
+    
+    $.ajax({
+        url: `/${photo_id.split('_')[1]}/like`,
+        method: "POST",
+        data: like,
+        dataType: "JSON",
+        success: function(){
+            $(`#${photo_id}`).removeClass('btn-light').addClass('btn-danger').prop('disabled', 'disabled');
+            $(`#total_${photo_id}`)[0].textContent = parseInt($(`#total_${photo_id}`)[0].textContent) + 1;
+        },
+        error: function(error){
+            console.log(error);
+        }
+    });
+})
+
+$(document).ready(function () {
+    $('.grid').masonry({
+        itemSelector: '.grid-item',
+    });
+})
 </script>
