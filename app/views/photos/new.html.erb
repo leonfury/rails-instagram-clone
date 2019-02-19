@@ -5,6 +5,7 @@
     </div>
     <div class="col-6">
         <%= form_with url: user_photos_path, scope: "photo", local: true, method: :post do |form| %>
+            <%= form.hidden_field :user_id, value:"#{current_user.id}" %></td>    
             <table class="w-100">
                 <tr>
                     <td width="20%"><%= form.label :photo_caption %></td>
@@ -33,6 +34,7 @@
                 <tr>
                     <td colspan="2"><%= form.file_field :url %></td>
                 </tr>
+                
                 <tr><td><br></td></tr>
                 <tr>
                     <td colspan="2"><%= form.submit %></td>
