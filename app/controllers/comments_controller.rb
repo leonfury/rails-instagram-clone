@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+    before_action :authorize_user, only: [:create]
     before_action :authorize_admin, only: [:destroy]
 
     def create
@@ -26,6 +27,13 @@ class CommentsController < ApplicationController
     end
     
     private
+    def authorize_user
+        if !signed_in?
+            flash["error"] = "You do not have sufficient permission to do this action."
+            redirect_to root_path
+        end
+    end
+
     def authorize_admin
         if !is_admin?
             flash["error"] = "You do not have sufficient permission to do this action."

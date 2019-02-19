@@ -19,6 +19,7 @@
     <tr>
         <th>Photo</th>
         <th>Caption</th>
+        <th>Tags</th>
         <th>Total Likes</th>
         <th>Total Comments</th>
         <th>Location</th>
@@ -30,6 +31,13 @@
         <tr>
             <td><%= image_tag p.url.to_s,  size:"200" if p.url.to_s != "" %></td>
             <td><%= p.caption %></td>
+            <td>
+                <% if p.tags %>
+                    <% p.tags.each do |t| %>
+                        <%= t %>, 
+                    <% end %>
+                <% end %>
+            </td>
             <td><%= p.likes.count %></td>
             <td><%= p.comments.count %></td>
             <td><%= p.location %></td>

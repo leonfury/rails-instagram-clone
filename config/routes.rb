@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
     get "/user/:id/photos" => "photos#index_user", as: "user_photos_index"
 
-    resources :photos, only: [:index, :create, :destroy]
+    resources :photos, only: [:index, :destroy]
     
     root "photos#index"
 

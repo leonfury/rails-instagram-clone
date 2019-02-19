@@ -1,5 +1,6 @@
 class PhotosController < ApplicationController
     before_action :set_photo, only: [:show, :destroy]
+    before_action :authorize_user, only: [:new, :create]
     before_action :authorize_admin, only: [:index_admin, :destroy]
 
     def index
@@ -80,8 +81,7 @@ class PhotosController < ApplicationController
     end
 
     def authorize_user
-        return if is_admin?
-        if current_user.id != params[:id].to_i
+        if current_user.id != params[:user_id].to_i
             flash["error"] = "You do not have sufficient permission to do this action."
             redirect_to root_path
         end

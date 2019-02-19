@@ -4,16 +4,17 @@
             <% if @photo.location %>
                 <p class="gal_item_location">Location: <%= @photo.location.capitalize %></p>
             <% end %>
-            <p> 
+            <div class="text-left">
                 <% if @photo.tags %>
                     <i>Tags: </i>
-                    <% @photo.tags.each do |t| %> 
-                        <button class="btn btn-light">
-                            <%= t %>
-                        </button>
+                    <% @photo.tags.each do |t| %>
+                        <%= form_with url: photos_path, method: "get", local: true, 'html': {style:"display: inline;"} do %>
+                            <%= hidden_field_tag(:tags, t) %>
+                            <%= submit_tag(t, class:"btn btn-light") %>
+                        <% end %>
                     <% end %>
                 <% end %>
-            </p>
+            </div>
             <%= image_tag @photo.url.to_s, style:"width: 100%" %>
 
             <div class="row align-items-center mt-2"> 
@@ -25,7 +26,7 @@
                     <p class="gal_item_date"><%= @photo.created_at.strftime("%d %B %Y") %></p>
                 </div>
             </div>
-            <% if !is_admin? %>
+            <% if signed_in? && !is_admin? %>
                 <%= form_with url: comment_path(@photo.id), method: :post, remote: true, class:"text-right" do |f| %>
                     <%= f.text_area :comment, cols: 20, rows: 4, class:"w-100 form-control" %>
                     <%= f.submit "Add Comment", id:"add_com_btn", class:"btn btn-success mt-1" %>
@@ -53,7 +54,7 @@
                         </a>
                         <span class="gal_item_caption"><%= c.comment %></span>
                     </p>
-                    <% if is_admin? %>
+                    <% if signed_in? && is_admin? %>
                         <%= button_to 'Delete this comment^', comment_destroy_path(c.id), method: :post, data: { confirm: 'Are you sure?' }, class:"btn btn-danger ml-4" %> 
                         <hr>
                     <% end %>

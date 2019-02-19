@@ -6,15 +6,9 @@ class UsersController < SessionsController
     def index
         @users = User.all
     end
-
-    def show
-    end
     
     def new
         @user = User.new
-    end
-
-    def edit
     end
 
     def create
@@ -28,15 +22,19 @@ class UsersController < SessionsController
         end 
     end
 
+    def show
+    end
+
+    def edit
+    end
+
     def update
-        respond_to do |format|
-            if @user.update(user_params)
-                format.html { redirect_to @user, notice: 'User was successfully updated.' }
-                format.json { render :show, status: :ok, location: @user }
-            else
-                format.html { render :edit }
-                format.json { render json: @user.errors, status: :unprocessable_entity }
-            end
+        if @user.update(user_params)
+            flash[:success] = 'User was successfully updated.'
+            redirect_to user_path
+        else
+            flash[:error] = 'User updated failed.'
+            redirect_to user_path
         end
     end
 

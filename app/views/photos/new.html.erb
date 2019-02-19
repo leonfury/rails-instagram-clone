@@ -4,7 +4,7 @@
         <div id="map" style="min-width: 100%; width: 100%; min-height: 100vh; height: 100vh;"></div>
     </div>
     <div class="col-6">
-        <%= form_with url: photos_path, scope: "photo", local: true, method: :post do |form| %>
+        <%= form_with url: user_photos_path, scope: "photo", local: true, method: :post do |form| %>
             <table class="w-100">
                 <tr>
                     <td width="20%"><%= form.label :photo_caption %></td>

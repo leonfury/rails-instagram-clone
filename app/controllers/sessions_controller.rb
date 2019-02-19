@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
         user = User.find_by(email: params[:user][:email])
         if user && user.authenticate(params[:user][:password])
             session[:user_id] = user.id
-            flash[:success] = "Sign In Successful"
+            flash[:success] = "Sign In Successful. Welcome #{user.username}!"
         else
             flash[:error] = "Sign In Fail"
         end

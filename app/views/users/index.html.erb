@@ -7,10 +7,12 @@
         <th>Email</th>
         <th width="30%">Description</th>
         <th width="20%">Address</th>
+        <th>Total Uploads</th>
         <th>Role</th>
         <th colspan="3">Admin actions</th>
     </tr>
     <% @users.each do |u| %>
+        <% next if u.role %>
         <tr>
             <td>
                 <%= image_tag u.avatar.to_s,  size:"200" if u.avatar.to_s != "" %>
@@ -19,6 +21,7 @@
             <td><%= u.email %></td>
             <td><%= u.description %></td>
             <td><%= u.address %></td>
+            <td><%= u.photos.count %></td>
             <td>
                 <% if u.role %>
                     Admin
@@ -26,8 +29,8 @@
                     User
                 <% end %>
             </td>            
-            <td><%= link_to 'Show', u, class:"btn btn-light" %></td>
-            <td><%= link_to 'Edit', edit_user_path(u), class:"btn btn-light" %></td>
+            <td><%= link_to 'Show', user_photos_index_path(u), class:"btn btn-light", target:"_blank" %></td>
+            <td><%= link_to 'Edit', edit_user_path(u), class:"btn btn-light", target:"_blank" %></td>
             <td><%= link_to 'Destroy', u, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-light" %></td>
         </tr>
     <% end %>
