@@ -35,7 +35,6 @@
                         <button id="like_<%= p.id %>" class="like_btn btn mr-2 btn-danger" disabled> Like </button>
                     <% end %>
 
-                    <!-- <button class="btn btn-light mr-2"> Comment </button> -->
                     <%= form_with url: user_photo_path(user_id: p.user.id, id: p.id), method: :get, remote: true do %>
                         <button type="submit" class="btn btn-light mr-2" data-toggle="modal" data-target="#exampleModalLong">Comment</button>
                     <% end %>        
@@ -44,10 +43,11 @@
                 <div style="clear: both;">
                     <p>
                         <a href="/user/<%= p.user.id %>/photos">
-                            <%= image_tag p.user.avatar.to_s, class:"profile_photo_badge mr-2" %>
+                            <%= image_tag p.user.avatar.to_s, class:"profile_photo_badge mr-2" if p.user.avatar.to_s != "" %>
                             <span class="gal_item_author"><%= p.user.username %></span>
                         </a>
-                        <span class="gal_item_caption"><%= p.caption %></span></p>
+                        <span class="gal_item_caption"><%= p.caption %></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -55,29 +55,29 @@
 <% end %>
 
 <script>
-$('.like_btn').on('click', (e) => {
-    var photo_id = e.target.id;        
-    
-    var like = {};
-    var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-    like["authenticity_token"] = AUTH_TOKEN;
-    
-    $.ajax({
-        url: `/${photo_id.split('_')[1]}/like`,
-        method: "POST",
-        data: like,
-        dataType: "JSON",
-        success: function(){
-            $(`#${photo_id}`).removeClass('btn-light').addClass('btn-danger').prop('disabled', 'disabled');
-            $(`#total_${photo_id}`)[0].textContent = parseInt($(`#total_${photo_id}`)[0].textContent) + 1;
-        },
-        error: function(error){
-            console.log(error);
-        }
-    });
-})
-
 $(document).ready(function () {
+    $('.like_btn').on('click', (e) => {
+        var photo_id = e.target.id;        
+        
+        var like = {};
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        like["authenticity_token"] = AUTH_TOKEN;
+        
+        $.ajax({
+            url: `/${photo_id.split('_')[1]}/like`,
+            method: "POST",
+            data: like,
+            dataType: "JSON",
+            success: function(){
+                $(`#${photo_id}`).removeClass('btn-light').addClass('btn-danger').prop('disabled', 'disabled');
+                $(`#total_${photo_id}`)[0].textContent = parseInt($(`#total_${photo_id}`)[0].textContent) + 1;
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    });
+
     $('.grid').masonry({
         itemSelector: '.grid-item',
     });

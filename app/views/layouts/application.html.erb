@@ -35,23 +35,38 @@
                         <%=  link_to "Sign Up", new_user_path %>
                     </li>
                 <% else %>
-                    <li class="nav-item">
-                        <%=  link_to "My Album", user_photos_index_path(current_user.id), class:"mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                        <%=  link_to "Upload Photo", new_user_photo_path(current_user.id), class:"mr-5" %>
+                    <% if !is_admin? %>
+                        <li class="nav-item">
+                            <%=  link_to "My Album", user_photos_index_path(current_user.id), class:"mr-5" %>
                         </li>
-                    <li class="nav-item">
-                        <%=  link_to "My Friends", root_path, class:"mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                        <%=  link_to "My Profile", user_path(current_user), class:"mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                        <%=  link_to "Sign Out", sign_out_path, method: :post, class:"mr-5" %>
-                    </li>
-                    <%= image_tag current_user.avatar.to_s,  class:"mr-3 profile_photo_badge" %>
-                    Signed in as <%= current_user.email %>
+                        <li class="nav-item">
+                            <%=  link_to "Upload Photo", new_user_photo_path(current_user.id), class:"mr-5" %>
+                            </li>
+                        <li class="nav-item">
+                            <%=  link_to "My Friends", root_path, class:"mr-5" %>
+                        </li>
+                        <li class="nav-item">
+                            <%=  link_to "My Profile", user_path(current_user), class:"mr-5" %>
+                        </li>
+                        <li class="nav-item">
+                            <%=  link_to "Sign Out", sign_out_path, method: :post, class:"mr-5" %>
+                        </li>
+                        <%= image_tag current_user.avatar.to_s,  class:"mr-3 profile_photo_badge" if current_user.avatar.to_s != "" %>
+                        Signed in as <%= current_user.email %>
+                    <% else %>
+                        <li class="nav-item">
+                            <%=  link_to "User Index", users_path, method: :get, class:"mr-5" %>
+                        </li>
+                        <li class="nav-item">
+                            <%=  link_to "Photo Index", admin_photos_path, method: :get, class:"mr-5" %>
+                        </li>
+                        <li class="nav-item">
+                            <%=  link_to "Comment Index", root_path, method: :get, class:"mr-5" %>
+                        </li>
+                        <li class="nav-item">
+                            <%=  link_to "Sign Out", sign_out_path, method: :post, class:"mr-5" %>
+                        </li>
+                    <% end %>
                 <% end %>
             </ul>
         </div>

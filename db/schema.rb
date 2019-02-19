@@ -25,14 +25,6 @@ ActiveRecord::Schema.define(version: 2019_02_15_124557) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "followers", force: :cascade do |t|
-    t.bigint "user_id"
-    t.integer "follower_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_followers_on_user_id"
-  end
-
   create_table "likes", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "photo_id"

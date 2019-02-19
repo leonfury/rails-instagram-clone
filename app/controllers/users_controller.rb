@@ -41,11 +41,12 @@ class UsersController < SessionsController
     end
 
     def destroy
+        Photo.where(user_id: @user.id).delete_all
+        Comment.where(user_id: @user.id).delete_all
+        Like.where(user_id: @user.id).delete_all
         @user.destroy
-        respond_to do |format|
-            format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-            format.json { head :no_content }
-        end
+        flash[:notice] = "User deleted successfully"
+        redirect_to users_path
     end
 
     private
@@ -54,7 +55,8 @@ class UsersController < SessionsController
     end
 
     def authorize_user
-        if current_user.id != params[:id].to_i || is_admin?
+        return if is_admin?
+        if current_user.id != params[:id].to_i
             flash["error"] = "You do not have sufficient permission to do this action."
             redirect_to root_path
         end

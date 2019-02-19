@@ -1,27 +1,34 @@
-<p id="notice"><%= notice %></p>
+<h1>Users Index</h1>
 
-<h1>Users</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th colspan="3"></th>
+<table class="table">
+    <tr class="">
+        <th>Avatar</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th width="30%">Description</th>
+        <th width="20%">Address</th>
+        <th>Role</th>
+        <th colspan="3">Admin actions</th>
     </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <% @users.each do |u| %>
+        <tr>
+            <td>
+                <%= image_tag u.avatar.to_s,  size:"200" if u.avatar.to_s != "" %>
+            </td>
+            <td><%= u.username %></td>
+            <td><%= u.email %></td>
+            <td><%= u.description %></td>
+            <td><%= u.address %></td>
+            <td>
+                <% if u.role %>
+                    Admin
+                <% else %>
+                    User
+                <% end %>
+            </td>            
+            <td><%= link_to 'Show', u, class:"btn btn-light" %></td>
+            <td><%= link_to 'Edit', edit_user_path(u), class:"btn btn-light" %></td>
+            <td><%= link_to 'Destroy', u, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-light" %></td>
+        </tr>
     <% end %>
-  </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New User', new_user_path %>

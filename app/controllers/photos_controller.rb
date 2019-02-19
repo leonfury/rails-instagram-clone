@@ -1,4 +1,6 @@
 class PhotosController < ApplicationController
+    before_action :set_photo, only: [:show, :destroy]
+    before_action :authorize_admin, only: [:index_admin, :destroy]
 
     def index
         @photos = Photo.all
@@ -17,6 +19,10 @@ class PhotosController < ApplicationController
         @photos = Photo.where(user_id: params[:id]).order("created_at DESC")
         @photo = Photo.last
         @user = User.find(params[:id])
+    end
+
+    def index_admin
+        @photos = Photo.all.order("created_at DESC")
     end
 
     def new
@@ -45,11 +51,17 @@ class PhotosController < ApplicationController
     end
 
     def show
-        @photo = Photo.find(params[:id])
-        
         respond_to do |format|
             format.js
         end
+    end
+
+    def destroy
+        Like.where(photo: @photo).delete_all
+        Comment.where(photo: @photo).delete_all
+        @photo.destroy
+        flash[:notice] = "Photo deleted successfully"
+        redirect_to admin_photos_path
     end
 
     private
@@ -61,5 +73,24 @@ class PhotosController < ApplicationController
             :long,
             :lat,
         )
+    end
+
+    def set_photo
+        @photo = Photo.find(params[:id])
+    end
+
+    def authorize_user
+        return if is_admin?
+        if current_user.id != params[:id].to_i
+            flash["error"] = "You do not have sufficient permission to do this action."
+            redirect_to root_path
+        end
+    end
+
+    def authorize_admin
+        if !is_admin?
+            flash["error"] = "You do not have sufficient permission to do this action."
+            redirect_to root_path
+        end
     end
 end

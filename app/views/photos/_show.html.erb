@@ -1,68 +1,69 @@
-<div class="text-justify">
-    <div id="<%= @photo.id %>" class="" style="">
-        <% if @photo.location %>
-            <p class="gal_item_location">Location: <%= @photo.location.capitalize %></p>
-        <% end %>
-        <p> 
-            <% if @photo.tags %>
-                <i>Tags: </i>
-                <% @photo.tags.each do |t| %> 
-                    <button class="btn btn-light">
-                        <%= t %>
-                    </button>
+<% if @photo %>    
+    <div class="text-justify">
+        <div id="<%= @photo.id %>" class="" style="">
+            <% if @photo.location %>
+                <p class="gal_item_location">Location: <%= @photo.location.capitalize %></p>
+            <% end %>
+            <p> 
+                <% if @photo.tags %>
+                    <i>Tags: </i>
+                    <% @photo.tags.each do |t| %> 
+                        <button class="btn btn-light">
+                            <%= t %>
+                        </button>
+                    <% end %>
+                <% end %>
+            </p>
+            <%= image_tag @photo.url.to_s, style:"width: 100%" %>
+
+            <div class="row align-items-center mt-2"> 
+                <div class="col-6">
+                    <span><%= @photo.likes.count %></span> Likes | 
+                    <span><%= @photo.comments.count %></span> Comments
+                </div>
+                <div class="col-6" style="float: right;">
+                    <p class="gal_item_date"><%= @photo.created_at.strftime("%d %B %Y") %></p>
+                </div>
+            </div>
+            <% if !is_admin? %>
+                <%= form_with url: comment_path(@photo.id), method: :post, remote: true, class:"text-right" do |f| %>
+                    <%= f.text_area :comment, cols: 20, rows: 4, class:"w-100 form-control" %>
+                    <%= f.submit "Add Comment", id:"add_com_btn", class:"btn btn-success mt-1" %>
+                <% end %>        
+            <% end %>   
+
+            <hr class="mt-1">
+            <div style="clear: both;">
+                <p>
+                    <a href="/user/<%= @photo.user.id %>/photos">
+                        <%= image_tag @photo.user.avatar.to_s, class:"profile_photo_badge mr-2" if @photo.user.avatar.to_s != "" %>
+                        <span class="gal_item_author"><%= @photo.user.username %></span>
+                    </a>
+                    <span class="gal_item_caption"><%= @photo.caption %></span>
+                </p>
+            </div>
+
+            <!-- comment loop -->
+            <% if @photo.comments.count > 0 %>
+                <% @photo.comments.each do |c| %>
+                    <p class="ml-4">
+                        <a href="/user/<%= c.user.id %>/photos">
+                            <%= image_tag c.user.avatar.to_s, class:"profile_photo_badge mr-2" if c.user.avatar.to_s != "" %>
+                            <span class="gal_item_author"><%= c.user.username %></span>
+                        </a>
+                        <span class="gal_item_caption"><%= c.comment %></span>
+                    </p>
+                    <% if is_admin? %>
+                        <%= button_to 'Delete this comment^', comment_destroy_path(c.id), method: :post, data: { confirm: 'Are you sure?' }, class:"btn btn-danger ml-4" %> 
+                        <hr>
+                    <% end %>
+
                 <% end %>
             <% end %>
-        </p>
-        <%= image_tag @photo.url.to_s, style:"width: 100%" %>
-
-        <div class="row align-items-center mt-2"> 
-            <div class="col-6">
-                <span id="total_like_<%= @photo.id %>"><%= Like.where(photo_id: @photo.id).count %></span> Likes | 
-                <span> 0</span> Comments 
-            </div>
-            <div class="col-6" style="float: right;">
-                <p class="gal_item_date"><%= @photo.created_at.strftime("%d %B %Y") %></p>
-            </div>
         </div>
-        
-
-        <%= form_with url: comment_path(@photo.id), method: :post, remote: true, class:"text-right" do |f| %>
-            <%= f.text_area :comment, cols: 20, rows: 4, class:"w-100 form-control" %>
-            <%= f.submit "Add Comment", id:"add_com_btn", class:"btn btn-success mt-1" %>
-        <% end %>        
-        
-        <hr class="mt-1">
-        <div style="clear: both;">
-            <p>
-                <a href="/user/<%= @photo.user.id %>/photos">
-                    <%= image_tag @photo.user.avatar.to_s, class:"profile_photo_badge mr-2" %>
-                    <span class="gal_item_author"><%= @photo.user.username %></span>
-                </a>
-                <span class="gal_item_caption"><%= @photo.caption %></span>
-            </p>
-        </div>
-
-        <!-- comment loop -->
-        <% if @photo.comments.count > 0 %>
-            <% @photo.comments.each do |c| %>
-                <p class="ml-4">
-                    <a href="/user/<%= c.user.id %>/photos">
-                        <%= image_tag c.user.avatar.to_s, class:"profile_photo_badge mr-2" %>
-                        <span class="gal_item_author"><%= c.user.username %></span>
-                    </a>
-                    <span class="gal_item_caption"><%= c.comment %></span>
-                </p>
-
-            <% end %>
-        <% end %>
     </div>
-</div>
+<% end %>
 
 <script>
-    $('#add_com_btn').on('click', () => {
-        var a = $('#comment')[0].value;
-        
-    })
-
     $('#comment')[0].value = "";
 </script>
