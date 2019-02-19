@@ -1,0 +1,120 @@
+<div class="col-6">
+    <%= form_with(model: user, local: true) do |form| %>
+        <% if user.errors.any? %>
+            <div id="error_explanation">
+                <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+                <ul>
+                    <% user.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                    <% end %>
+                </ul>
+            </div>
+        <% end %>
+
+        <table class="w-100">
+            <tr>
+                <td width="20%"><%= form.label :email %></td>
+                <td width="80%"><%= form.text_field :email, class:"w-100" %></td>
+            </tr>
+
+            <tr>
+                <td><%= form.label :password %></td>
+                <td><%= form.password_field :password, class:"w-100" %></td>
+            </tr>
+
+            <tr>
+                <td><%= form.label :password_confirmation, class:"mr-2" %></td>
+                <td><%= form.password_field :password_confirmation, class:"w-100" %></td>
+            </tr>
+            <tr><td><br></td></tr>
+            <tr>
+                <td><%= form.label :username %></td>
+                <td><%= form.text_field :username, class:"w-100" %></td>
+            </tr>
+
+            <tr>
+                <td><%= form.label :description %></td>
+                <td><%= form.text_area :description, cols: 20, rows: 8, class:"w-100" %></td>
+            </tr>
+            <tr><td><br></td></tr>
+            <tr>
+                <td><%= form.label :address %></td>
+                <td><%= form.text_area :address, cols: 20, rows: 8, class:"w-100" %></td>
+            </tr>
+
+            <tr class="d-none">
+                <td><%= form.label :long %></td>
+                <td><%= form.text_field :long %></td>
+            </tr>
+
+            <tr class="d-none">
+                <td><%= form.label :lat %></td>
+                <td><%= form.text_field :lat %></td>
+            </tr>
+            <tr><td><br></td></tr>
+            
+            <tr>
+                <td> Profile Photo </td>
+                <td>
+                    <% if signed_in? %>
+                        <%= image_tag current_user.avatar.to_s,  class:"mr-3" %>
+                    <% end %>
+                    <%= form.file_field :avatar %>
+                </td>
+            </tr>
+            <tr><td><br></td></tr>
+            
+
+            <tr>
+                <td colspan="2">
+                    <%= form.submit %>
+                </td>
+            </tr>
+
+        </table>
+    <% end %>
+    
+</div>
+
+<div class="col-6">
+    <div id="map" style="min-width: 100%; width: 100%; min-height: 100%; height: 100%;"></div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';    
+    var marker = 0;
+    var client = new MapboxClient(mapboxgl.accessToken);
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10',
+    });
+
+    if ($('#user_address')[0].value != "") {
+        getCoordinates();
+    }
+
+    $('#user_address').on('keyup', () => {
+        getCoordinates();
+    })
+
+    function getCoordinates(){
+        if (marker) { marker.remove() }
+        var getAddress = document.getElementById('user_address').value;
+        client.geocodeForward(getAddress, function(err, data, res){
+            var coordinates = data.features[0].center;
+            $('#user_long')[0].value = coordinates[0];
+            $('#user_lat')[0].value = coordinates[1];
+            
+            map.flyTo({
+                center: coordinates,
+                zoom: 18,
+            });
+
+            var marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+        });
+    }
+})
+</script>

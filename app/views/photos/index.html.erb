@@ -1,0 +1,35 @@
+<h1> Rails Instagram Clone </h1>
+
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongcaption" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div id="gal_modal" class="modal-body">
+                <%= render partial: "photos/show" %>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row grid js-masonry w-100 ml-2 mr-2">
+    <div class="grid-item col-sm-6 col-lg-3" >
+        <div class="gal_item pt-4" style="background-color: #f8f9fa; min-height: 260px;">
+            <h4>Search Filter</h4>
+            <span>Searches for photo caption, photo location & username</span>
+            <%= form_with url: photos_path, method: "get", local: true do %>
+                <%= text_field_tag(:caption, nil, class:"w-100") %>
+                <br>
+                <br>
+                <%= submit_tag("Search", class:"btn btn-primary") %>
+            <% end %>
+            <br><br>
+            <%= "Displaying search results for: #{@search}" if @search %>
+        </div>
+    </div>
+    <%= render partial: "photos/gallery" %>
+</div>

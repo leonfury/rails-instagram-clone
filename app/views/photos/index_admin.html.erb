@@ -1,0 +1,55 @@
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongcaption" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div id="gal_modal" class="modal-body">
+                <%= render partial: "photos/show" %>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<h1> Photos Index </h1>
+<table class="table">
+    <tr>
+        <th>Photo</th>
+        <th>Caption</th>
+        <th>Tags</th>
+        <th>Total Likes</th>
+        <th>Total Comments</th>
+        <th>Location</th>
+        <th>Uploaded By</th>
+        <th colspan="2">Admin Action</th>
+    </tr>
+
+    <% @photos.each do |p| %>
+        <tr>
+            <td><%= image_tag p.url.to_s,  size:"200" if p.url.to_s != "" %></td>
+            <td><%= p.caption %></td>
+            <td>
+                <% if p.tags %>
+                    <% p.tags.each do |t| %>
+                        <%= t %>, 
+                    <% end %>
+                <% end %>
+            </td>
+            <td><%= p.likes.count %></td>
+            <td><%= p.comments.count %></td>
+            <td><%= p.location %></td>
+            <td><%= p.user.username %></td>
+            <td>
+                <%= form_with url: user_photo_path(user_id: p.user.id, id: p.id), method: :get, remote: true do %>
+                    <button type="submit" class="btn btn-light mr-2" data-toggle="modal" data-target="#exampleModalLong">Show</button>
+                <% end %>    
+            </td>
+            <td><%= link_to 'Destroy', p, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-light" %></td>
+        </tr>
+    <% end %>
+</table>
+
+

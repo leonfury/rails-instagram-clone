@@ -1,0 +1,81 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+.profile_photo_badge {
+    max-width: 30px;
+    max-height: 30px;
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+.gal_item {
+    padding: 10px;
+    margin: 5px;
+    border: 2px solid black;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.gal_item img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow:  5px 5px #eef2ed;
+}
+
+.gal_item form {
+    display: inline;
+}
+
+.gal_item_author {
+    font-weight: bold;
+}
+
+.gal_item_location {
+    margin-bottom: 0px;
+}
+
+.gal_item_caption {
+    
+}
+
+.gal_item_date {
+    padding-top: 10px;
+    text-align: right;
+}
+
+#overlay_container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 2000;
+    background-color:rgba(240, 248, 255, 0.9);
+}
+
+#overlay_view {
+    width: 50vw;
+    height: 50vh;
+    border: 5px solid purple;
+    position: relative;
+    margin: auto;
+    margin-top: 50px;
+    z-index: 2000;
+    background-color: purple;
+    opacity: 1.0 !important;
+}

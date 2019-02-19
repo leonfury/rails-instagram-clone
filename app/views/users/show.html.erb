@@ -1,0 +1,66 @@
+<h1> My Profile </h1>
+<div class="row m-auto">
+    <table class="col-3 ml-5">
+        <tr>
+            <td colspan="2">
+                <%= image_tag @user.avatar.to_s, class:"border rounded w-100", style:"background-size: cover;" %>
+            </td>
+        </tr>
+        <tr>
+            <td width="20%">Name</td>
+            <td>: <%= current_user.username %></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>: <%= current_user.email %></td>
+        </tr>
+        <tr>
+            <td>About Me</td>
+            <td>: <%= current_user.description %></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>: <%= current_user.address %></td>
+        </tr>
+        <tr>
+            <td>Longtitude</td>
+            <td>: <span id="long"><%= current_user.long %></span></td>
+        </tr>
+        <tr>
+            <td>Latitude</td>
+            <td>: <span id="lat"><%= current_user.lat %></span></td>
+        </tr>
+        <tr><td><br></td></tr>
+        <tr>
+            <td colspan="2"><%= link_to "Edit Profile", edit_user_path(current_user), class:"btn btn-primary" %></td>
+        </tr>
+    </table>
+
+    <div class="col-6">
+        <div id="map" style="min-width: 100%; width: 100%; min-height: 100%; height: 100%;"></div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';    
+    var marker = 0;
+    var client = new MapboxClient(mapboxgl.accessToken);
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10',
+    });
+
+    var coordinates = [];
+    coordinates.push($('#long')[0].textContent);
+    coordinates.push($('#lat')[0].textContent);
+    console.log(coordinates);
+    
+    map.flyTo({
+        center: coordinates,
+        zoom: 18,
+    });
+
+    var marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+})
+</script>

@@ -1,0 +1,85 @@
+<% if @photos.count > 0 %>
+    <% @photos.each do |p| %>
+        <div class="grid-item col-sm-6 col-lg-3 text-justify">
+            <div id="<%= p.id %>" class="gal_item" style="">
+                <% if p.location %>
+                    <p class="gal_item_location">Location: <%= p.location.capitalize %></p>
+                <% end %>
+                <div class="text-left">
+                    <% if p.tags %>
+                        <i>Tags: </i>
+                        <% p.tags.each do |t| %>
+                            <%= form_with url: photos_path, method: "get", local: true do %>
+                                <%= hidden_field_tag(:tags, t) %>
+                                <%= submit_tag(t, class:"btn btn-light") %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </div>
+                <%= image_tag p.url.to_s, size:"" %>
+
+                <div class="row align-items-center mt-2"> 
+                    <div class="col-6">
+                        <span id="total_like_<%= p.id %>"><%= p.likes.count %></span> Likes | 
+                        <span id="total_com_<%= p.id %>"><%= p.comments.count %></span> Comments 
+                    </div>
+                    <div class="col-6" style="float: right;">
+                        <p class="gal_item_date"><%= p.created_at.strftime("%d %B %Y") %></p>
+                    </div>
+                </div>
+
+                <% if signed_in? %>
+                    <% if Like.find_by(photo_id: p.id, user_id: current_user.id) == nil %> 
+                        <button id="like_<%= p.id %>" class="like_btn btn mr-2 btn-light"> Like </button>
+                    <% else %>
+                        <button id="like_<%= p.id %>" class="like_btn btn mr-2 btn-danger" disabled> Like </button>
+                    <% end %>
+
+                    <%= form_with url: user_photo_path(user_id: p.user.id, id: p.id), method: :get, remote: true do %>
+                        <button type="submit" class="btn btn-light mr-2" data-toggle="modal" data-target="#exampleModalLong">Comment</button>
+                    <% end %>        
+                <% end %>
+                <hr class="mt-1">
+                <div style="clear: both;">
+                    <p>
+                        <a href="/user/<%= p.user.id %>/photos">
+                            <%= image_tag p.user.avatar.to_s, class:"profile_photo_badge mr-2" if p.user.avatar.to_s != "" %>
+                            <span class="gal_item_author"><%= p.user.username %></span>
+                        </a>
+                        <span class="gal_item_caption"><%= p.caption %></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    <% end %>
+<% end %>
+
+<script>
+$(document).ready(function () {
+    $('.like_btn').on('click', (e) => {
+        var photo_id = e.target.id;        
+        
+        var like = {};
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        like["authenticity_token"] = AUTH_TOKEN;
+        
+        $.ajax({
+            url: `/${photo_id.split('_')[1]}/like`,
+            method: "POST",
+            data: like,
+            dataType: "JSON",
+            success: function(){
+                $(`#${photo_id}`).removeClass('btn-light').addClass('btn-danger').prop('disabled', 'disabled');
+                $(`#total_${photo_id}`)[0].textContent = parseInt($(`#total_${photo_id}`)[0].textContent) + 1;
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    });
+
+    $('.grid').masonry({
+        itemSelector: '.grid-item',
+    });
+})
+</script>
