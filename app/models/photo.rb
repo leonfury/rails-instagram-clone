@@ -24,4 +24,7 @@ class Photo < ApplicationRecord
         return result, "tags: #{tag}"
     end
 
+    def self.create_new(*input)
+        byebug
+    end
 end

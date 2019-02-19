@@ -28,26 +28,13 @@ class PhotosController < ApplicationController
     end
 
     def create
-        @photo = Photo.new(photo_params)
-        @photo.user_id = current_user.id
-        p_tags = []
-
-        if params[:photo][:tags]
-            array = params[:photo][:tags].split(',')
-            array.each do |i|
-                p_tags << i.strip
-            end
-            @photo.tags = p_tags
-        end
-
-        if @photo.save
+        if Photo.create_new(photo_params)
             flash[:success] = "Photo uploaded to gallery succesfully"        
             redirect_to root_path
         else
             flash[:error] = "Photo upload failed"
             redirect_to new_user_photo_path(current_user.id)
         end
-        
     end
 
     def show
@@ -73,6 +60,7 @@ class PhotosController < ApplicationController
             :location,
             :long,
             :lat,
+            :tags,
         )
     end
 
