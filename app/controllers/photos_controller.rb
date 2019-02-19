@@ -3,6 +3,12 @@ class PhotosController < ApplicationController
     def index
         @photos = Photo.all
         @photo = Photo.last
+        
+        @photos = @photos.joins(:user).where('lower(caption) LIKE ? OR lower(username) LIKE ? OR lower(location) LIKE ?', "%#{params[:caption].downcase}%", "%#{params[:caption].downcase}%", "%#{params[:caption].downcase}%") if params[:caption].present?
+        @search = params[:caption] if params[:caption].present?
+
+        @photos = @photos.where("? = ANY (tags)", params[:tags]) if params[:tags].present?
+        @search = "tags: #{params[:tags]}" if params[:tags].present?
     end
 
     def index_user
@@ -23,7 +29,7 @@ class PhotosController < ApplicationController
         if params[:photo][:tags]
             array = params[:photo][:tags].split(',')
             array.each do |i|
-                p_tags << i
+                p_tags << i.strip
             end
             @photo.tags = p_tags
         end
