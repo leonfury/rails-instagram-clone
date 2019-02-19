@@ -39,11 +39,11 @@ class UsersController < SessionsController
     end
 
     def destroy
-        Photo.where(user_id: @user.id).delete_all
-        Comment.where(user_id: @user.id).delete_all
-        Like.where(user_id: @user.id).delete_all
-        @user.destroy
-        flash[:notice] = "User deleted successfully"
+        if User.destroy_cascade(@user)
+            flash[:notice] = "User deleted successfully"
+        else
+            flash[:error] = "User delete failed!"
+        end
         redirect_to users_path
     end
 

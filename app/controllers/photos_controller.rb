@@ -7,19 +7,16 @@ class PhotosController < ApplicationController
         @photos = Photo.all
         @photo = Photo.last
         
-        @photos = @photos.joins(:user).where('lower(caption) LIKE ? OR lower(username) LIKE ? OR lower(location) LIKE ?', "%#{params[:caption].downcase}%", "%#{params[:caption].downcase}%", "%#{params[:caption].downcase}%") if params[:caption].present?
-        @search = params[:caption] if params[:caption].present?
-
-        @photos = @photos.where("? = ANY (tags)", params[:tags]) if params[:tags].present?
-        @search = "tags: #{params[:tags]}" if params[:tags].present?
-
+        @photos, @search = Photo.search_all(params[:caption].downcase) if params[:caption].present?
+        @photos, @search = Photo.search_tag(params[:tags]) if params[:tags].present?
+        
         @photos = @photos.order("created_at DESC")
     end
 
     def index_user
-        @photos = Photo.where(user_id: params[:id]).order("created_at DESC")
-        @photo = Photo.last
         @user = User.find(params[:id])
+        @photos = Photo.where(user: @user).order("created_at DESC")
+        @photo = Photo.last 
     end
 
     def index_admin
@@ -45,10 +42,12 @@ class PhotosController < ApplicationController
 
         if @photo.save
             flash[:success] = "Photo uploaded to gallery succesfully"        
+            redirect_to root_path
         else
             flash[:error] = "Photo upload failed"
+            redirect_to new_user_photo_path(current_user.id)
         end
-        redirect_to root_path
+        
     end
 
     def show
@@ -58,10 +57,11 @@ class PhotosController < ApplicationController
     end
 
     def destroy
-        Like.where(photo: @photo).delete_all
-        Comment.where(photo: @photo).delete_all
-        @photo.destroy
-        flash[:notice] = "Photo deleted successfully"
+        if Photo.destroy_cascade(@photo)
+            flash[:notice] = "Photo deleted successfully."
+        else
+            flash[:error] = "Photo deletion failed."
+        end
         redirect_to admin_photos_path
     end
 
