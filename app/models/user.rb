@@ -3,6 +3,14 @@ class User < ApplicationRecord
     has_many :comments
     has_many :likes
     has_many :photos
+
+    validates :email, uniqueness: true, presence: true
+    validates :email, format: { with: /.+@.+\...+/, message: "format is incorrect." }
+    validates :username, uniqueness: true, presence: true
+    validates :description, presence: true
+    validates :address, presence: true
+    # validates :avatar, presence: true
+
     mount_uploader :avatar, AvatarUploader
 
     def self.destroy_cascade(user)

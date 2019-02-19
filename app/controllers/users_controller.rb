@@ -18,8 +18,11 @@ class UsersController < SessionsController
             sign_in
         else
             flash["error"] = "Fail to create account. Error: #{@user.errors.full_messages}"
-            render new_user_path
+            respond_to do |format|
+                format.html { render action: "new"}
+            end
         end 
+        
     end
 
     def show
