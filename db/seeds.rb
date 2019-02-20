@@ -19,6 +19,21 @@ Dir.glob(dir_path).each do |d|
 	end
 end
 
+=begin
+https://rubyrails-instagram-clone-leon.herokuapp.com/uploads/photo/url/1/tesla-cat.jpg
+
+    User.create!(
+        email: "user100@mail.com",
+        password: "123",
+        username: "user100",
+        description: 'test',
+        address: 'test',
+        long: '100',
+        lat: '30',
+       remote_avatar_url: "https://apod.nasa.gov/apod/image/1407/m31_bers_960.jpg",
+    )
+=end
+
 # clear photo url directory
 dir_path = "public/uploads/photo/url/*"
 Dir.glob(dir_path).each do |d|
@@ -50,9 +65,9 @@ i = 0
         address: Faker::Address.street_address,
         long: rand(0..100),
         lat: rand(0..60),
-        # avatar: open(Dir.glob("db/seeds/images/*").sample),
+        avatar: open(Dir.glob("db/seeds/images/*").sample),
     )
-    user.remote_avatar_url = Faker::Avatar.image
+    # user.remote_avatar_url = Faker::Avatar.image
     i += 1
     p "#{user.username} created successfully" if user.save
 end
