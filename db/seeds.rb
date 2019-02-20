@@ -41,7 +41,7 @@ User.create(
 )
 
 i = 0
-30.times do 
+5.times do 
     user = User.new(
         email: "user#{i}@mail.com",
         password: "123",
@@ -50,7 +50,8 @@ i = 0
         address: Faker::Address.street_address,
         long: rand(0..100),
         lat: rand(0..60),
-        avatar: open(Dir.glob("db/seeds/images/*").sample),
+        # avatar: open(Dir.glob("db/seeds/images/*").sample),
+        avatar: Faker::Avatar.image,
     )
     i += 1
     p "#{user.username} created successfully" if user.save
@@ -58,7 +59,7 @@ end
 
 
 i = 0
-80.times do 
+5.times do 
     photo = Photo.new(
         url: open(Dir.glob("db/seeds/images/*").sample),
         caption: Faker::TvShows::GameOfThrones.quote,
@@ -76,21 +77,21 @@ i = 0
 end
 
 i = 0
-200.times do
+20.times do
     comment = Comment.new(
         comment: Faker::TvShows::GameOfThrones.quote,
-        user_id: rand(2..30),
-        photo_id: rand(1..100),
+        user_id: rand(2..5),
+        photo_id: rand(1..5),
     )
     i += 1
     p "Comment ##{i} created successfully" if comment.save
 end
 
 i = 0
-150.times do
+15.times do
     like = Like.new(
-        user_id: rand(2..30),
-        photo_id: rand(1..100),
+        user_id: rand(2..5),
+        photo_id: rand(1..5),
     )
     i += 1
     p "Like ##{i} created successfully" if like.save
