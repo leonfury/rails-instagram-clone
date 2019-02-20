@@ -51,7 +51,7 @@ i = 0
         long: rand(0..100),
         lat: rand(0..60),
         # avatar: open(Dir.glob("db/seeds/images/*").sample),
-        avatar: Faker::Avatar.image,
+        avatar: open(Faker::Avatar.image),
     )
     i += 1
     p "#{user.username} created successfully" if user.save
@@ -61,7 +61,8 @@ end
 i = 0
 5.times do 
     photo = Photo.new(
-        url: open(Dir.glob("db/seeds/images/*").sample),
+        # url: open(Dir.glob("db/seeds/images/*").sample),
+        url: open(Faker::Avatar.image),
         caption: Faker::TvShows::GameOfThrones.quote,
         user_id: rand(2..30),
         tags: [],
