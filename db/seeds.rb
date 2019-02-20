@@ -52,12 +52,12 @@ i = 0
         lat: rand(0..60),
         # avatar: open(Dir.glob("db/seeds/images/*").sample),
     )
-    user.remote_avatar_url = Faker::Avatar.image
+    user.remote_avatar = Faker::Avatar.image
     i += 1
     p "#{user.username} created successfully" if user.save
 end
 
-
+=begin
 i = 0
 5.times do 
     photo = Photo.new(
@@ -97,3 +97,4 @@ i = 0
     i += 1
     p "Like ##{i} created successfully" if like.save
 end
+=end
