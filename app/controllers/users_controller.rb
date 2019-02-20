@@ -18,8 +18,11 @@ class UsersController < SessionsController
             sign_in
         else
             flash["error"] = "Fail to create account. Error: #{@user.errors.full_messages}"
-            render new_user_path
+            respond_to do |format|
+                format.html { render action: "new"}
+            end
         end 
+        
     end
 
     def show
@@ -39,7 +42,7 @@ class UsersController < SessionsController
     end
 
     def destroy
-        if User.destroy_cascade(@user)
+        if User.destroy_cascade(@user.id)
             flash[:notice] = "User deleted successfully"
         else
             flash[:error] = "User delete failed!"

@@ -2,16 +2,21 @@ class Photo < ApplicationRecord
     has_many :likes
     has_many :comments
     belongs_to :user
+    
+    validates :url, presence: true
+    validates :user_id, presence: true
+
     mount_uploader :url, UrlUploader
 
-    def self.destroy_cascade(p)
-        Like.where(photo: p).delete_all
-        Comment.where(photo: p).delete_all
-        destroy_photo(p)
+    def self.destroy_cascade(id)
+        Like.where(photo: id).delete_all
+        Comment.where(photo: id).delete_all
+        destroy_photo(id)
     end
 
-    def self.destroy_photo(p)
-        return p.destroy ? true : false
+    def self.destroy_photo(id)
+        return false if Photo.where(id: id) == []
+        return true if Photo.find(id).destroy
     end
 
     def self.search_all(search)
