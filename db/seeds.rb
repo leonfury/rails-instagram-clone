@@ -14,7 +14,6 @@ dir_path = "public/uploads/user/avatar/*"
 Dir.glob(dir_path).each do |d|
     fn = File.join(d, "*")
     Dir.glob(fn).each do |f|
-	    p f
         File.delete(f)
 	end
 end
@@ -22,16 +21,13 @@ end
 =begin
 https://rubyrails-instagram-clone-leon.herokuapp.com/uploads/photo/url/1/tesla-cat.jpg
 
-    User.create!(
-        email: "user100@mail.com",
-        password: "123",
-        username: "user100",
-        description: 'test',
-        address: 'test',
-        long: '100',
-        lat: '30',
-       remote_avatar_url: "https://apod.nasa.gov/apod/image/1407/m31_bers_960.jpg",
-    )
+dir_path = "public/uploads/user/avatar/*"
+Dir.glob(dir_path).each do |d|
+    fn = File.join(d, "*")
+    Dir.glob(fn).each do |f|
+	    p f
+	end
+end
 =end
 
 # clear photo url directory
@@ -67,7 +63,6 @@ i = 0
         lat: rand(0..60),
         avatar: open(Dir.glob("db/seeds/images/*").sample),
     )
-    # user.remote_avatar_url = Faker::Avatar.image
     i += 1
     p "#{user.username} created successfully" if user.save
 end
