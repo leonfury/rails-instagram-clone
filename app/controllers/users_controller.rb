@@ -42,7 +42,7 @@ class UsersController < SessionsController
     end
 
     def destroy
-        if User.destroy_cascade(@user)
+        if User.destroy_cascade(@user.id)
             flash[:notice] = "User deleted successfully"
         else
             flash[:error] = "User delete failed!"

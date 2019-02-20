@@ -44,7 +44,7 @@ class PhotosController < ApplicationController
     end
 
     def destroy
-        if Photo.destroy_cascade(@photo)
+        if Photo.destroy_cascade(@photo.id)
             flash[:notice] = "Photo deleted successfully."
         else
             flash[:error] = "Photo deletion failed."
