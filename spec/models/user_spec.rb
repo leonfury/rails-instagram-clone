@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
         end        
     end
 
-    context 'Sign up check - usename uniqueness' do
+    context 'Sign up check - uniqueness' do
         # similar email to reference point
         it 'error: email already exist' do
             user = User.create(email: 'user@mail.com', password: '123', username: 'user1', description: 'test', address: 'address', long: '123', lat: '123')
