@@ -41,7 +41,7 @@ User.create(
 )
 
 i = 0
-5.times do 
+5.times do  
     user = User.new(
         email: "user#{i}@mail.com",
         password: "123",
