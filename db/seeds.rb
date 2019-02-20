@@ -21,6 +21,10 @@ end
 =begin
 https://rubyrails-instagram-clone-leon.herokuapp.com/uploads/photo/url/1/tesla-cat.jpg
 
+Dir.glob("public/uploads/user/avatar/*")
+
+Dir.glob("*")
+
 dir_path = "public/uploads/user/avatar/*"
 Dir.glob(dir_path).each do |d|
     fn = File.join(d, "*")
