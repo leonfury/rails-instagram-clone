@@ -51,8 +51,8 @@ i = 0
         long: rand(0..100),
         lat: rand(0..60),
         # avatar: open(Dir.glob("db/seeds/images/*").sample),
-        avatar: open(Faker::Avatar.image),
     )
+    user.remote_avatar_url = Faker::Avatar.image
     i += 1
     p "#{user.username} created successfully" if user.save
 end
