@@ -37,17 +37,17 @@
                 </tr>
                 <tr>
                     <td width="20%">Name</td>
-                    <td>: <%= current_user.username %></td>
+                    <td>: <%= @user.username %></td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td>: <%= current_user.email %></td>
+                    <td>: <%= @user.email %></td>
                 </tr>
             </table>
             
             <p> 
                 <strong>About Me</strong>
-                <br><%= current_user.description %>
+                <br><%= @user.description %>
             </p>
             
             <strong>My Whereabouts</strong>
@@ -61,8 +61,8 @@
 </div>
 
 <div class="d-none">
-    <span id="lat"><%= current_user.lat %></span>
-    <span id="long"><%= current_user.long %></span>
+    <span id="lat"><%= @user.lat %></span>
+    <span id="long"><%= @user.long %></span>
 </div>
 
 <script>
