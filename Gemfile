@@ -68,3 +68,5 @@ end
 
 gem 'rails_12factor', group: :production
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+gem 'figaro'
+gem 'fog-aws'
