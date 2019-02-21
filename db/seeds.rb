@@ -9,6 +9,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!(:comments);
 ActiveRecord::Base.connection.reset_pk_sequence!(:photos);
 ActiveRecord::Base.connection.reset_pk_sequence!(:users);
 
+=begin
 # clear user avatar directory
 dir_path = "public/uploads/user/avatar/*"
 Dir.glob(dir_path).each do |d|
@@ -17,22 +18,6 @@ Dir.glob(dir_path).each do |d|
         File.delete(f)
 	end
 end
-
-=begin
-https://rubyrails-instagram-clone-leon.herokuapp.com/uploads/photo/url/1/tesla-cat.jpg
-
-Dir.glob("public/uploads/user/avatar/*")
-
-Dir.glob("*")
-
-dir_path = "public/uploads/user/avatar/*"
-Dir.glob(dir_path).each do |d|
-    fn = File.join(d, "*")
-    Dir.glob(fn).each do |f|
-	    p f
-	end
-end
-=end
 
 # clear photo url directory
 dir_path = "public/uploads/photo/url/*"
@@ -43,6 +28,7 @@ Dir.glob(dir_path).each do |d|
         File.delete(f)
 	end
 end
+=end
 
 User.create(
     email: "admin@mail.com",
@@ -56,7 +42,7 @@ User.create(
 )
 
 i = 0
-5.times do  
+3.times do  
     user = User.new(
         email: "user#{i}@mail.com",
         password: "123",
