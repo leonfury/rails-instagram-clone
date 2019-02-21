@@ -7,6 +7,7 @@ class Photo < ApplicationRecord
     validates :user_id, presence: true
 
     mount_uploader :url, UrlUploader
+    paginates_per 50
 
     def self.destroy_cascade(id)
         Like.where(photo: id).delete_all

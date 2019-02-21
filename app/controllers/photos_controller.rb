@@ -10,7 +10,7 @@ class PhotosController < ApplicationController
         @photos, @search = Photo.search_all(params[:caption].downcase) if params[:caption].present?
         @photos, @search = Photo.search_tag(params[:tags]) if params[:tags].present?
         
-        @photos = @photos.order("created_at DESC")
+        @photos = @photos.order("created_at DESC").page params[:page]
     end
 
     def index_user

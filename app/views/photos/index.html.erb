@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div class="row grid js-masonry w-100 ml-2 mr-2">
+<div class="row grid js-masonry w-100 ml-2 mr-2 w-100">
     <div class="grid-item col-sm-6 col-lg-3" >
         <div class="gal_item pt-4" style="background-color: #f8f9fa; min-height: 260px;">
             <h4>Search Filter</h4>
@@ -31,5 +31,6 @@
             <%= "Displaying search results for: #{@search}" if @search %>
         </div>
     </div>
+    <%= paginate @photos %>
     <%= render partial: "photos/gallery" %>
 </div>
