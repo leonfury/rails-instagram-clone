@@ -42,30 +42,32 @@ User.create(
 )
 
 i = 0
-3.times do  
+30.times do  
     user = User.new(
         email: "user#{i}@mail.com",
         password: "123",
         username: Faker::FunnyName.name,
         description: Faker::GreekPhilosophers.quote,
         address: Faker::Address.street_address,
-        long: rand(0..100),
-        lat: rand(0..60),
+        long: "#{rand(-330..330.99999)}",
+        lat: "#{rand(-60..60.99999)}",
         avatar: open(Dir.glob("db/seeds/images/*").sample),
     )
     i += 1
     p "#{user.username} created successfully" if user.save
 end
 
-=begin
 i = 0
-5.times do 
+80.times do 
     photo = Photo.new(
         # url: open(Dir.glob("db/seeds/images/*").sample),
         url: open(Faker::Avatar.image),
         caption: Faker::TvShows::GameOfThrones.quote,
         user_id: rand(2..30),
         tags: [],
+        location: Faker::Address.city,
+        long: "#{rand(-330..330.99999)}",
+        lat: "#{rand(-60..60.99999)}",
     )
 
     tag_ar = ['cat', 'cute', 'dog', 'puppy', 'adorable']
@@ -78,23 +80,22 @@ i = 0
 end
 
 i = 0
-20.times do
+200.times do
     comment = Comment.new(
         comment: Faker::TvShows::GameOfThrones.quote,
-        user_id: rand(2..5),
-        photo_id: rand(1..5),
+        user_id: rand(2..30),
+        photo_id: rand(1..80),
     )
     i += 1
     p "Comment ##{i} created successfully" if comment.save
 end
 
 i = 0
-15.times do
+150.times do
     like = Like.new(
-        user_id: rand(2..5),
-        photo_id: rand(1..5),
+        user_id: rand(2..30),
+        photo_id: rand(1..80),
     )
     i += 1
     p "Like ##{i} created successfully" if like.save
 end
-=end
