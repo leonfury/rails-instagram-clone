@@ -4,7 +4,7 @@ class UsersController < SessionsController
     before_action :authorize_admin, only: [:index, :destroy]
 
     def index
-        @users = User.all
+        @users = User.all.order("created_at ASC")
     end
     
     def new

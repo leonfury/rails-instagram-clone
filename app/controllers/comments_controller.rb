@@ -23,6 +23,7 @@ class CommentsController < ApplicationController
 
     def destroy
         Comment.find(params[:id]).destroy
+        flash[:success] = "Comment deleted"
         redirect_to admin_photos_path
     end
     
