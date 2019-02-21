@@ -46,7 +46,7 @@
 
             <!-- comment loop -->
             <% if @photo.comments.count > 0 %>
-                <% @photo.comments.order("created_at DESC").each do |c| %>
+                <% @photo.comments.order("created_at ASC").each do |c| %>
                     <p class="ml-4">
                         <a href="/user/<%= c.user.id %>/photos">
                             <%= image_tag c.user.avatar.to_s, class:"profile_photo_badge mr-2" if c.user.avatar.to_s != "" %>
