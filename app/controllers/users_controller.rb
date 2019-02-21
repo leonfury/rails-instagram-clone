@@ -34,12 +34,18 @@ class UsersController < SessionsController
     def update
         if @user.update(user_params)
             flash[:success] = 'User was successfully updated.'
-            redirect_to users_path if is_admin?
-            redirect_to user_path
+            if is_admin?
+                redirect_to users_path 
+            else
+                redirect_to user_path
+            end
         else
             flash[:error] = 'User updated failed.'
-            redirect_to users_path if is_admin?
-            redirect_to user_path
+            if is_admin?
+                redirect_to users_path 
+            else
+                redirect_to user_path
+            end
         end
     end
 
