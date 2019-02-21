@@ -29,9 +29,9 @@
                     User
                 <% end %>
             </td>            
-            <td><%= link_to 'Show', user_photos_index_path(u), class:"btn btn-light", target:"_blank" %></td>
-            <td><%= link_to 'Edit', edit_user_path(u), class:"btn btn-light", target:"_blank" %></td>
-            <td><%= link_to 'Destroy', u, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-light" %></td>
+            <td><%= link_to 'Show', user_photos_index_path(u.id), class:"btn btn-light", target:"_blank" %></td>
+            <td><%= link_to 'Edit', edit_user_path(u.id), class:"btn btn-light", target:"_blank" %></td>
+            <td><%= link_to 'Destroy', user_path(u.id), method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-light" %></td>
         </tr>
     <% end %>
 </table>

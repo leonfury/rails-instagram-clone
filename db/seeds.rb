@@ -60,8 +60,7 @@ end
 i = 0
 80.times do 
     photo = Photo.new(
-        # url: open(Dir.glob("db/seeds/images/*").sample),
-        url: open(Faker::Avatar.image),
+        url: open(Dir.glob("db/seeds/images/*").sample),
         caption: Faker::TvShows::GameOfThrones.quote,
         user_id: rand(2..30),
         tags: [],
