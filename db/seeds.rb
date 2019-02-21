@@ -70,7 +70,7 @@ i = 0
         lat: "#{rand(-60..60.99999)}",
     )
 
-    tag_ar = ['cat', 'cute', 'dog', 'puppy', 'adorable']
+    tag_ar = ['cat', 'cute', 'dog', 'puppy', 'adorable', 'scenery', 'nature', 'quiet', 'colorful', 'beach']
     rand(1..5).times {
         photo.tags << tag_ar.sample
     }
