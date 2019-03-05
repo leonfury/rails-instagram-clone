@@ -19,3 +19,4 @@ describe "signup process", type: :feature do
         expect(page).to have_content 'Sign Out'
     end
 end
+
